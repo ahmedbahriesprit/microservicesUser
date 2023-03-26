@@ -33,7 +33,7 @@ public class UserController {
      *
      * @return A list of all users.
      */
-    @GetMapping("/")
+    @GetMapping("/list")
     public List<UserEntity> getAllUsers() {
         return userService.getAllUsers();
     }
@@ -44,9 +44,20 @@ public class UserController {
      * @param id The ID of the user to return.
      * @return The user with the specified ID, or null if no such user exists.
      */
-    @GetMapping("/{id}")
+    @GetMapping("/list/{id}")
     public UserEntity getUserById(@PathVariable Long id) {
         return userService.getUserById(id);
+    }
+
+    /**
+     * Returns the user with the specified code.
+     *
+     * @param code The code of the user to return.
+     * @return The user with the specified code, or null if no such user exists.
+     */
+    @GetMapping("/list/codes/{code}")
+    public UserEntity getUserByCode(@PathVariable String code) {
+        return userService.getUserByCode(code);
     }
 
     /**
@@ -55,7 +66,7 @@ public class UserController {
      * @param userEntity The user to create.
      * @return The newly created user.
      */
-    @PostMapping("/")
+    @PostMapping("/list/create")
     public UserEntity createUser(@RequestBody UserEntity userEntity) {
         return userService.createUser(userEntity);
     }
@@ -63,13 +74,24 @@ public class UserController {
     /**
      * Updates the user with the specified ID.
      *
-     * @param id   The ID of the user to update.
+     * @param id         The ID of the user to update.
      * @param userEntity The new user data.
      * @return The updated user, or null if no such user exists.
      */
-    @PutMapping("/{id}")
+    @PutMapping("/list/update/{id}")
     public UserEntity updateUser(@PathVariable Long id, @RequestBody UserEntity userEntity) {
         return userService.updateUser(id, userEntity);
+    }
+    /**
+     * Updates the user with the specified code.
+     *
+     * @param code         The code of the user to update.
+     * @param userEntity The new user data.
+     * @return The updated user, or null if no such user exists.
+     */
+    @PutMapping("/list/update/codes/{code}")
+    public UserEntity updateUserByCode(@PathVariable String code, @RequestBody UserEntity userEntity) {
+        return userService.updateUserByCode(code, userEntity);
     }
 
     /**
@@ -77,8 +99,18 @@ public class UserController {
      *
      * @param id The ID of the user to delete.
      */
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/list/delete/{id}")
     public void deleteUser(@PathVariable Long id) {
         userService.deleteUser(id);
+    }
+
+    /**
+     * Deletes the user with the specified code.
+     *
+     * @param code The code of the user to delete.
+     */
+    @DeleteMapping("/list/delete/codes/{code}")
+    public void deleteUserByCode(@PathVariable String code) {
+        userService.deleteUserByCode(code);
     }
 }

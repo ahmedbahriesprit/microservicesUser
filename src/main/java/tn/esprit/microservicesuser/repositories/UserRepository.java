@@ -4,6 +4,8 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 import tn.esprit.microservicesuser.entities.UserEntity;
 
+import java.util.Optional;
+
 /**
  * This interface represents the repository for managing UserEntity objects.
  * It extends the JpaRepository interface which provides basic CRUD operations
@@ -13,5 +15,7 @@ import tn.esprit.microservicesuser.entities.UserEntity;
  */
 @Repository
 public interface UserRepository extends JpaRepository<UserEntity, Long> {
+    Optional<UserEntity> findByCode(String code);
+    void deleteByCode(String code);
 
 }

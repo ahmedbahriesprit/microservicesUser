@@ -1,0 +1,357 @@
+{
+	"info": {
+		"_postman_id": "f941cf95-d8c0-41ca-8cd6-58f895bac6a2",
+		"name": "UserCrud",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "CrudByCode",
+			"item": [
+				{
+					"name": "CreateUser",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"firstName\": \"Ahmed\",\r\n    \"lastName\": \"BAHRI\",\r\n    \"cin\": \"09628440\",\r\n    \"email\": \"Bahri.Ahmed@esprit.tn\",\r\n    \"password\": \"password123\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{Spring.url}}{{Spring.path.user}}{{Spring.Crud.list}}{{Spring.Crud.create}}",
+							"host": [
+								"{{Spring.url}}{{Spring.path.user}}{{Spring.Crud.list}}{{Spring.Crud.create}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GetUserByCode",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{Spring.url}}{{Spring.path.user}}{{Spring.Crud.list}}{{Spring.path.byCode}}/{{code}}",
+							"host": [
+								"{{Spring.url}}{{Spring.path.user}}{{Spring.Crud.list}}{{Spring.path.byCode}}"
+							],
+							"path": [
+								"{{code}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "UpdateUser",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"firstName\": \"Ahmed\",\r\n    \"lastName\": \"Bahri\",\r\n    \"cin\": \"09628440\",\r\n    \"email\": \"Ahmed.bahri@iliadeconsulting.com\",\r\n    \"password\": \"newPassword123\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{Spring.url}}{{Spring.path.user}}{{Spring.Crud.list}}{{Spring.Crud.update}}{{Spring.path.byCode}}/{{code}}",
+							"host": [
+								"{{Spring.url}}{{Spring.path.user}}{{Spring.Crud.list}}{{Spring.Crud.update}}{{Spring.path.byCode}}"
+							],
+							"path": [
+								"{{code}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "ListAllUsers",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{Spring.url}}{{Spring.path.user}}{{Spring.Crud.list}}",
+							"host": [
+								"{{Spring.url}}{{Spring.path.user}}{{Spring.Crud.list}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "DeleteUser",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{Spring.url}}{{Spring.path.user}}{{Spring.Crud.list}}{{Spring.Crud.delete}}{{Spring.path.byCode}}/{{code}}",
+							"host": [
+								"{{Spring.url}}{{Spring.path.user}}{{Spring.Crud.list}}{{Spring.Crud.delete}}{{Spring.path.byCode}}"
+							],
+							"path": [
+								"{{code}}"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							"pm.variables.set('code','\"Ahmed-BAHRI-09628440\"');"
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				}
+			]
+		},
+		{
+			"name": "CrudByID",
+			"item": [
+				{
+					"name": "CreateUser",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"firstName\": \"Ahmed\",\r\n    \"lastName\": \"BAHRI\",\r\n    \"cin\": \"09628440\",\r\n    \"email\": \"Bahri.Ahmed@esprit.tn\",\r\n    \"password\": \"password123\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{Spring.url}}{{Spring.path.user}}{{Spring.Crud.list}}{{Spring.Crud.create}}",
+							"host": [
+								"{{Spring.url}}{{Spring.path.user}}{{Spring.Crud.list}}{{Spring.Crud.create}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GetUserByID",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{Spring.url}}{{Spring.path.user}}{{Spring.Crud.list}}/{{id}}",
+							"host": [
+								"{{Spring.url}}{{Spring.path.user}}{{Spring.Crud.list}}"
+							],
+							"path": [
+								"{{id}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "UpdateUser",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"firstName\": \"Ahmed\",\r\n    \"lastName\": \"Bahri\",\r\n    \"cin\": \"09628440\",\r\n    \"email\": \"Ahmed.bahri@iliadeconsulting.com\",\r\n    \"password\": \"newPassword123\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{Spring.url}}{{Spring.path.user}}{{Spring.Crud.list}}{{Spring.Crud.update}}/{{id}}",
+							"host": [
+								"{{Spring.url}}{{Spring.path.user}}{{Spring.Crud.list}}{{Spring.Crud.update}}"
+							],
+							"path": [
+								"{{id}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "ListAllUsers",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{Spring.url}}{{Spring.path.user}}{{Spring.Crud.list}}",
+							"host": [
+								"{{Spring.url}}{{Spring.path.user}}{{Spring.Crud.list}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "DeleteUser",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{Spring.url}}{{Spring.path.user}}{{Spring.Crud.list}}{{Spring.Crud.delete}}/{{id}}",
+							"host": [
+								"{{Spring.url}}{{Spring.path.user}}{{Spring.Crud.list}}{{Spring.Crud.delete}}"
+							],
+							"path": [
+								"{{id}}"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							"pm.variables.set('id',14);"
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				}
+			]
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	]
+}

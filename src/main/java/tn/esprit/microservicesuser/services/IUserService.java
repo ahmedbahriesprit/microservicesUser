@@ -26,6 +26,14 @@ public interface IUserService {
     UserEntity getUserById(Long id);
 
     /**
+     * Retrieve a user with the specified ID.
+     *
+     * @param code The code of the user to retrieve.
+     * @return A UserEntity object representing the user with the specified code, or null if not found.
+     */
+    UserEntity getUserByCode(String code);
+
+    /**
      * Create a new user with the specified data.
      *
      * @param userEntity A UserEntity object containing the data for the new user.
@@ -43,9 +51,25 @@ public interface IUserService {
     UserEntity updateUser(Long id, UserEntity userEntity);
 
     /**
+     * Update an existing user with the specified data.
+     *
+     * @param code       The code of the user to update.
+     * @param userEntity A UserEntity object containing the updated data for the user.
+     * @return A UserEntity object representing the updated user, or null if the user was not found.
+     */
+    UserEntity updateUserByCode(String code, UserEntity userEntity);
+
+    /**
      * Delete a user with the specified ID.
      *
      * @param id The ID of the user to delete.
      */
     void deleteUser(Long id);
+
+    /**
+     * Delete a user with the specified code.
+     *
+     * @param code The code of the user to delete.
+     */
+    void deleteUserByCode(String code);
 }

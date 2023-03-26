@@ -44,6 +44,17 @@ public class UserServiceImpl implements IUserService {
     }
 
     /**
+     * Retrieves a user entity from the database based on its code.
+     *
+     * @param code The code of the user to retrieve.
+     * @return The user entity with the specified code, or null if no such user exists.
+     */
+    @Override
+    public UserEntity getUserByCode(String code) {
+        return userRepository.findByCode(code).orElse(null);
+    }
+
+    /**
      * Creates a new user entity in the database.
      *
      * @param userEntity The user entity to create.
@@ -51,6 +62,7 @@ public class UserServiceImpl implements IUserService {
      */
     @Override
     public UserEntity createUser(UserEntity userEntity) {
+        userEntity.setCode(userEntity.getFirstName() + "-" + userEntity.getLastName() + "-" + userEntity.getCin());
         userEntity.setPassword(UserEntity.hashPassword(userEntity.getPassword()));
         return userRepository.save(userEntity);
     }
@@ -68,6 +80,30 @@ public class UserServiceImpl implements IUserService {
         if (existingUserEntity != null) {
             existingUserEntity.setFirstName(userEntity.getFirstName());
             existingUserEntity.setLastName(userEntity.getLastName());
+            existingUserEntity.setCin(userEntity.getCin());
+            existingUserEntity.setCode(userEntity.getFirstName() + "-" + userEntity.getLastName() + "-" + userEntity.getCin());
+            existingUserEntity.setEmail(userEntity.getEmail());
+            existingUserEntity.setPassword(UserEntity.hashPassword(userEntity.getPassword()));
+            return userRepository.save(existingUserEntity);
+        }
+        return null;
+    }
+
+    /**
+     * Updates an existing user entity in the database.
+     *
+     * @param code       The code of the user to update.
+     * @param userEntity The updated user entity.
+     * @return The updated user entity, with a hashed password.
+     */
+    @Override
+    public UserEntity updateUserByCode(String code, UserEntity userEntity) {
+        UserEntity existingUserEntity = userRepository.findByCode(code).orElse(null);
+        if (existingUserEntity != null) {
+            existingUserEntity.setFirstName(userEntity.getFirstName());
+            existingUserEntity.setLastName(userEntity.getLastName());
+            existingUserEntity.setCin(userEntity.getCin());
+            existingUserEntity.setCode(userEntity.getFirstName() + "-" + userEntity.getLastName() + "-" + userEntity.getCin());
             existingUserEntity.setEmail(userEntity.getEmail());
             existingUserEntity.setPassword(UserEntity.hashPassword(userEntity.getPassword()));
             return userRepository.save(existingUserEntity);
@@ -83,5 +119,15 @@ public class UserServiceImpl implements IUserService {
     @Override
     public void deleteUser(Long id) {
         userRepository.deleteById(id);
+    }
+
+    /**
+     * Deletes a user entity from the database based on its code.
+     *
+     * @param code The code of the user to delete.
+     */
+    @Override
+    public void deleteUserByCode(String code) {
+        userRepository.deleteByCode(code);
     }
 }

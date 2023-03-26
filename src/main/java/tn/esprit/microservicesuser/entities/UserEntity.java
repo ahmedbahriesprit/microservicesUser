@@ -37,6 +37,11 @@ public class UserEntity {
 
     @Column(name = "last_name")
     private String lastName;
+    @Column(name = "cin")
+    private String cin;
+    @Column(name = "code")
+    private String code;
+
 
     @Column(name = "email")
     private String email;

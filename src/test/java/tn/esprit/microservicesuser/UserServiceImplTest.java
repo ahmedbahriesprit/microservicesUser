@@ -41,8 +41,8 @@ public class UserServiceImplTest {
     public void testGetAllUsers() {
         // Test setup
         List<UserEntity> users = new ArrayList<>();
-        users.add(new UserEntity(1L, "Ahmed", "Bahri", "ahmed.bahri.g@gmail.com", "password"));
-        users.add(new UserEntity(2L, "Bahri", "Ahmed", "bahri.ahmed@esprit.tn", "password"));
+        users.add(new UserEntity(1L, "Ahmed", "Bahri", "09628440", "Ahmed-Bahri-09628440", "ahmed.bahri.g@gmail.com", "password"));
+        users.add(new UserEntity(2L, "Bahri", "Ahmed", "9628440", "Ahmed-Bahri-09628440", "bahri.ahmed@esprit.tn", "password"));
         when(userRepository.findAll()).thenReturn(users);
 
         // Test execution
@@ -52,10 +52,14 @@ public class UserServiceImplTest {
         assertEquals(users.size(), result.size());
         assertEquals(users.get(0).getFirstName(), result.get(0).getFirstName());
         assertEquals(users.get(0).getLastName(), result.get(0).getLastName());
+        assertEquals(users.get(0).getCin(), result.get(0).getCin());
+        assertEquals(users.get(0).getCode(), result.get(0).getCode());
         assertEquals(users.get(0).getEmail(), result.get(0).getEmail());
         assertEquals(users.get(0).getPassword(), result.get(0).getPassword());
         assertEquals(users.get(1).getFirstName(), result.get(1).getFirstName());
         assertEquals(users.get(1).getLastName(), result.get(1).getLastName());
+        assertEquals(users.get(1).getCin(), result.get(1).getCin());
+        assertEquals(users.get(1).getCode(), result.get(1).getCode());
         assertEquals(users.get(1).getEmail(), result.get(1).getEmail());
         assertEquals(users.get(1).getPassword(), result.get(1).getPassword());
     }
@@ -67,7 +71,7 @@ public class UserServiceImplTest {
     @Test
     public void testGetUserById() {
         // Test setup
-        UserEntity user = new UserEntity(1L, "Ahmed", "Bahri", "ahmed.bahri.g@gmail.com", "password");
+        UserEntity user = new UserEntity(1L, "Ahmed", "Bahri", "09628440", "Ahmed-Bahri-09628440", "ahmed.bahri.g@gmail.com", "password");
         when(userRepository.findById(1L)).thenReturn(Optional.of(user));
 
         // Test execution
@@ -76,6 +80,30 @@ public class UserServiceImplTest {
         // Test assertions
         assertEquals(user.getFirstName(), result.getFirstName());
         assertEquals(user.getLastName(), result.getLastName());
+        assertEquals(user.getCin(), result.getCin());
+        assertEquals(user.getCode(), result.getCode());
+        assertEquals(user.getEmail(), result.getEmail());
+        assertEquals(user.getPassword(), result.getPassword());
+    }
+
+    /**
+     * Tests the getUserByCode() method of the UserServiceImpl class.
+     * Verifies that the method returns a UserEntity object with the correct properties.
+     */
+    @Test
+    public void testGetUserByCode() {
+        // Test setup
+        UserEntity user = new UserEntity(1L, "Ahmed", "Bahri", "09628440", "Ahmed-Bahri-09628440", "ahmed.bahri.g@gmail.com", "password");
+        when(userRepository.findByCode("Ahmed-Bahri-09628440")).thenReturn(Optional.of(user));
+
+        // Test execution
+        UserEntity result = userServiceImpl.getUserByCode("Ahmed-Bahri-09628440");
+
+        // Test assertions
+        assertEquals(user.getFirstName(), result.getFirstName());
+        assertEquals(user.getLastName(), result.getLastName());
+        assertEquals(user.getCin(), result.getCin());
+        assertEquals(user.getCode(), result.getCode());
         assertEquals(user.getEmail(), result.getEmail());
         assertEquals(user.getPassword(), result.getPassword());
     }
@@ -87,8 +115,8 @@ public class UserServiceImplTest {
     @Test
     public void testCreateUser() {
         // Test setup
-        UserEntity user = new UserEntity(null, "Ahmed", "Bahri", "ahmed.bahri.g@gmail.com", "password");
-        when(userRepository.save(user)).thenReturn(new UserEntity(1L, "Ahmed", "Bahri", "ahmed.bahri.g@gmail.com", "hashedPassword"));
+        UserEntity user = new UserEntity(null, "Ahmed", "Bahri", "09628440", "Ahmed-Bahri-09628440", "ahmed.bahri.g@gmail.com", "password");
+        when(userRepository.save(user)).thenReturn(new UserEntity(1L, "Ahmed", "Bahri", "09628440", "Ahmed-Bahri-09628440", "ahmed.bahri.g@gmail.com", "hashedPassword"));
 
         // Test execution
         UserEntity result = userServiceImpl.createUser(user);
@@ -96,6 +124,8 @@ public class UserServiceImplTest {
         // Test assertions
         assertEquals(user.getFirstName(), result.getFirstName());
         assertEquals(user.getLastName(), result.getLastName());
+        assertEquals(user.getCin(), result.getCin());
+        assertEquals(user.getCode(), result.getCode());
         assertEquals(user.getEmail(), result.getEmail());
         assertEquals("hashedPassword", result.getPassword());
     }
@@ -107,10 +137,10 @@ public class UserServiceImplTest {
     @Test
     public void testUpdateUser() {
         // Test setup
-        UserEntity existingUser = new UserEntity(1L, "Ahmed", "Bahri", "ahmed.bahri.g@gmail.com", "password");
-        UserEntity updatedUser = new UserEntity(null, "Bahri", "Ahmed", "ahmed.bahri@iliadeconsulting.com", "newPassword");
+        UserEntity existingUser = new UserEntity(1L, "Ahmed", "Bahri", "19628440", "Ahmed-Bahri-09628440", "ahmed.bahri.g@gmail.com", "password");
+        UserEntity updatedUser = new UserEntity(null, "Bahri", "Ahmed", "09628440", "Ahmed-Bahri-09628440", "ahmed.bahri@iliadeconsulting.com", "newPassword");
         when(userRepository.findById(1L)).thenReturn(Optional.of(existingUser));
-        when(userRepository.save(existingUser)).thenReturn(new UserEntity(1L, "Bahri", "Ahmed", "ahmed.bahri@iliadeconsulting.com", "hashedNewPassword"));
+        when(userRepository.save(existingUser)).thenReturn(new UserEntity(1L, "Bahri", "Ahmed", "09628440", "Ahmed-Bahri-09628440", "ahmed.bahri@iliadeconsulting.com", "hashedNewPassword"));
 
         // Test execution
         UserEntity result = userServiceImpl.updateUser(1L, updatedUser);
@@ -118,6 +148,32 @@ public class UserServiceImplTest {
         // Test assertions
         assertEquals(updatedUser.getFirstName(), result.getFirstName());
         assertEquals(updatedUser.getLastName(), result.getLastName());
+        assertEquals(updatedUser.getCin(), result.getCin());
+        assertEquals(updatedUser.getCode(), result.getCode());
+        assertEquals(updatedUser.getEmail(), result.getEmail());
+        assertEquals("hashedNewPassword", result.getPassword());
+    }
+
+    /**
+     * Tests the updateUser() method of the UserServiceImpl class.
+     * Verifies that the method returns a UserEntity object with the correct properties.
+     */
+    @Test
+    void testupdateUserByCode() {
+        // Test setup
+        UserEntity existingUser = new UserEntity(1L, "Ahmed", "Bahri", "19628440", "Ahmed-Bahri-09628440", "ahmed.bahri.g@gmail.com", "password");
+        UserEntity updatedUser = new UserEntity(null, "Bahri", "Ahmed", "09628440", "Ahmed-Bahri-09628440", "ahmed.bahri@iliadeconsulting.com", "newPassword");
+        when(userRepository.findByCode("Ahmed-Bahri-09628440")).thenReturn(Optional.of(existingUser));
+        when(userRepository.save(existingUser)).thenReturn(new UserEntity(1L, "Bahri", "Ahmed", "09628440", "Ahmed-Bahri-09628440", "ahmed.bahri@iliadeconsulting.com", "hashedNewPassword"));
+
+        // Test execution
+        UserEntity result = userServiceImpl.updateUserByCode("Ahmed-Bahri-09628440", updatedUser);
+
+        // Test assertions
+        assertEquals(updatedUser.getFirstName(), result.getFirstName());
+        assertEquals(updatedUser.getLastName(), result.getLastName());
+        assertEquals(updatedUser.getCin(), result.getCin());
+        assertEquals(updatedUser.getCode(), result.getCode());
         assertEquals(updatedUser.getEmail(), result.getEmail());
         assertEquals("hashedNewPassword", result.getPassword());
     }
@@ -133,6 +189,16 @@ public class UserServiceImplTest {
 
         // Verify that the deleteById method of userRepository was called with the correct parameter
         verify(userRepository, times(1)).deleteById(1L);
+    }
+    /**
+     * Test case to verify that a user is deleted from the database correctly.
+     * It calls the deleteUser method of UserServiceImpl and verifies that the deleteById method of UserRepository is called with the correct parameter.
+     */
+    @Test
+    public void testDeleteUserByCode() {
+        String code = "Ahmed-Bahri-09628440";
+        userServiceImpl.deleteUserByCode(code);
+        verify(userRepository, times(1)).deleteByCode(code);
     }
 }
 
