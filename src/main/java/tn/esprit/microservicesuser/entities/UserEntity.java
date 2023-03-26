@@ -17,7 +17,7 @@ import java.security.NoSuchAlgorithmException;
 import java.util.Base64;
 
 /**
- * his class represents a user entity, with basic properties like first name, last name, email, password ...
+ * This class represents a user entity, with basic properties like first name, last name, email, password ...
  *
  * @author Ahmed BAHRI _ bahri.ahmed@esprit.tn 2ALINFO3
  */
