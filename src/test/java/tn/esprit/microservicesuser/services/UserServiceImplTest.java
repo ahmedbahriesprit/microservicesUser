@@ -17,7 +17,6 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import tn.esprit.microservicesuser.entities.UserEntity;
 import tn.esprit.microservicesuser.repositories.UserRepository;
-import tn.esprit.microservicesuser.services.UserServiceImpl;
 
 /**
  * Test class for the UserServiceImpl class. Uses Mockito and JUnit5 to perform unit tests.
