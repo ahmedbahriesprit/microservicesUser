@@ -1,11 +1,13 @@
 package tn.esprit.microservicesuser.services;
 
+import jakarta.ws.rs.NotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import tn.esprit.microservicesuser.entities.UserEntity;
 import tn.esprit.microservicesuser.repositories.UserRepository;
 
 import java.util.List;
+import java.util.Optional;
 
 /**
  * Implementation of the IUserService interface that provides CRUD operations for user entities.
@@ -43,16 +45,6 @@ public class UserServiceImpl implements IUserService {
         return userRepository.findById(id).orElse(null);
     }
 
-    /**
-     * Retrieves a user entity from the database based on its code.
-     *
-     * @param code The code of the user to retrieve.
-     * @return The user entity with the specified code, or null if no such user exists.
-     */
-    @Override
-    public UserEntity getUserByCode(String code) {
-        return userRepository.findByCode(code).orElse(null);
-    }
 
     /**
      * Creates a new user entity in the database.
@@ -119,6 +111,23 @@ public class UserServiceImpl implements IUserService {
     @Override
     public void deleteUser(Long id) {
         userRepository.deleteById(id);
+    }
+
+
+    /**
+     * Retrieves a user entity from the database based on its code.
+     *
+     * @param code The code of the user to retrieve.
+     * @return The user entity with the specified code, or null if no such user exists.
+     */
+    @Override
+    public UserEntity getUserByCode(String code) {
+        Optional<UserEntity> user = userRepository.findByCode(code);
+        if (user.isPresent()) {
+            return user.get();
+        } else {
+            throw new NotFoundException("User not found with code: " + code);
+        }
     }
 
     /**

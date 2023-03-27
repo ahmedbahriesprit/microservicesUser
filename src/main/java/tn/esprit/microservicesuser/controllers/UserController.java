@@ -114,14 +114,4 @@ public class UserController {
         userService.deleteUserByCode(code);
     }
 
-    /**
-     * Deletes All users
-     *
-     */
-    @DeleteMapping("/list/delete")
-    public void deleteAll() {
-        for (UserEntity user : userService.getAllUsers()) {
-                userService.deleteUser(user.getId());
-        }
-    }
 }
