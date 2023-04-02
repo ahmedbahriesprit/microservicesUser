@@ -66,17 +66,6 @@ class UserControllerTest {
         assertEquals(expectedJson, actualJson);
     }
 
-    @Test
-    public void testGetUserByCode() throws Exception {
-        UserEntity user = new UserEntity(1L, "Ahmed", "Bahri", "09628440", "Ahmed-Bahri-09628440", "ahmed.bahri.g@gmail.com", "password");
-        when(userService.getUserByCode(any(String.class))).thenReturn(user);
-        MvcResult result = mockMvc
-                .perform(MockMvcRequestBuilders.get("/users/list/codes/JD").accept(MediaType.APPLICATION_JSON))
-                .andReturn();
-        String expectedJson = new ObjectMapper().writeValueAsString(user);
-        String actualJson = result.getResponse().getContentAsString();
-        assertEquals(expectedJson, actualJson);
-    }
 
     @Test
     public void testCreateUser() throws Exception {
@@ -96,12 +85,6 @@ class UserControllerTest {
     }
 
     @Test
-    void testUpdateUserByCode() {
-        //TODO
-    }
-
-
-    @Test
     void testDeleteUser() {
         // Arrange
         Long id = 1L;
@@ -113,16 +96,4 @@ class UserControllerTest {
         verify(userService).deleteUser(id);
     }
 
-
-    @Test
-    void testDeleteUserByCode() {
-        // Arrange
-        String code = "Ahmed-Bahri-09628440";
-
-        // Act
-        userController.deleteUserByCode(code);
-
-        // Assert
-        verify(userService).deleteUserByCode(code);
-    }
 }
