@@ -2,7 +2,7 @@ version: '3.9'
 services:
   mysqldb:
     image: mysql:latest
-    restart: always
+    restart: "on-failure"
     environment:
       MYSQL_DATABASE: microservice_user
       MYSQL_USER: root
@@ -13,12 +13,12 @@ services:
       - '/home/mysql-data:/var/lib/mysql'
   eureka-service:
     image: eureka
+    restart: "on-failure"
     ports:
       - "8761:8761"
     environment:
       - eureka.client.register-with-eureka=true
-      - spring.profiles.active=default
-      - eureka.client.eureka-server-u-r-l-context=http://localhost:8761/eureka-service
+      - eureka.client.eureka-server-u-r-l-context=http://eureka-service:8761/eureka-service
   spring_app:
     image: "microservice-user:latest"
     container_name: microservice-user
