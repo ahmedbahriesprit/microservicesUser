@@ -1,14 +1,9 @@
 package tn.esprit.microservicesuser.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 import tn.esprit.microservicesuser.entities.UserEntity;
 import tn.esprit.microservicesuser.services.UserServiceImpl;
 
@@ -82,4 +77,12 @@ public class UserController {
         userService.deleteUser(id);
     }
 
+    @PostMapping
+    public ResponseEntity<String> login(@RequestParam String code, @RequestParam String password) {
+        UserEntity user = userService.authenticate(code, password);
+        if (user == null) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid credentials");
+        }
+        return ResponseEntity.ok("Welcome " + user.getFirstName() + " " + user.getLastName());
+    }
 }
