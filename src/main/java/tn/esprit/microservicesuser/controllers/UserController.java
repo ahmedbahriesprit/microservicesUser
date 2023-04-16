@@ -5,103 +5,84 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import tn.esprit.microservicesuser.entities.UserEntity;
-import tn.esprit.microservicesuser.services.IUserService;
+import tn.esprit.microservicesuser.services.UserServiceImpl;
 
 import java.util.List;
 
 /**
- * REST controller for managing users.
+ * This class represents the REST controller for managing user resources.
+ *
+ * @author Ahmed BAHRI _ bahri.ahmed@esprit.tn 2ALINFO3
  */
 @RestController
-@RequestMapping("/api/users")
+@RequestMapping("/users")
 public class UserController {
-
+    /**
+     * The service implementation for user management.
+     */
     @Autowired
-    private IUserService userService;
+    private UserServiceImpl userService;
 
     /**
-     * Retrieves a list of all users.
+     * Returns a list of all users.
      *
-     * @return A list of user entities.
+     * @return A list of all users.
      */
-    @GetMapping("")
-    public ResponseEntity<List<UserEntity>> getAllUsers() {
-        List<UserEntity> users = userService.getAllUsers();
-        return new ResponseEntity<>(users, HttpStatus.OK);
+    @GetMapping("/list")
+    public List<UserEntity> getAllUsers() {
+        return userService.getAllUsers();
     }
 
     /**
-     * Retrieves a user entity based on its ID.
+     * Returns the user with the specified ID.
      *
-     * @param id The ID of the user to retrieve.
-     * @return The user entity with the specified ID, or a 404 Not Found response if no such user exists.
+     * @param id The ID of the user to return.
+     * @return The user with the specified ID, or null if no such user exists.
      */
-    @GetMapping("/{id}")
-    public ResponseEntity<UserEntity> getUserById(@PathVariable("id") Long id) {
-        UserEntity user = userService.getUserById(id);
-        if (user == null) {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        } else {
-            return new ResponseEntity<>(user, HttpStatus.OK);
-        }
+    @GetMapping("/list/{id}")
+    public UserEntity getUserById(@PathVariable Long id) {
+        return userService.getUserById(id);
     }
 
     /**
-     * Creates a new user entity.
+     * Creates a new user.
      *
-     * @param userEntity The user entity to create.
-     * @return The created user entity, with a hashed password.
+     * @param userEntity The user to create.
+     * @return The newly created user.
      */
-    @PostMapping("")
-    public ResponseEntity<UserEntity> createUser(@RequestBody UserEntity userEntity) {
-        UserEntity createdUser = userService.createUser(userEntity);
-        return new ResponseEntity<>(createdUser, HttpStatus.CREATED);
+    @PostMapping("/list/create")
+    public UserEntity createUser(@RequestBody UserEntity userEntity) {
+        return userService.createUser(userEntity);
     }
 
     /**
-     * Updates an existing user entity.
+     * Updates the user with the specified ID.
      *
      * @param id         The ID of the user to update.
-     * @param userEntity The updated user entity.
-     * @return The updated user entity, with a hashed password, or a 404 Not Found response if no such user exists.
+     * @param userEntity The new user data.
+     * @return The updated user, or null if no such user exists.
      */
-    @PutMapping("/{id}")
-    public ResponseEntity<UserEntity> updateUser(@PathVariable("id") Long id, @RequestBody UserEntity userEntity) {
-        UserEntity updatedUser = userService.updateUser(id, userEntity);
-        if (updatedUser == null) {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        } else {
-            return new ResponseEntity<>(updatedUser, HttpStatus.OK);
-        }
+    @PutMapping("/list/update/{id}")
+    public UserEntity updateUser(@PathVariable Long id, @RequestBody UserEntity userEntity) {
+        return userService.updateUser(id, userEntity);
     }
 
     /**
-     * Deletes a user entity based on its ID.
+     * Deletes the user with the specified ID.
      *
      * @param id The ID of the user to delete.
-     * @return A 204 No Content response.
      */
-    @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteUser(@PathVariable("id") Long id) {
+    @DeleteMapping("/list/delete/{id}")
+    public void deleteUser(@PathVariable Long id) {
         userService.deleteUser(id);
-        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
-    /**
-     * Authenticates a user by their code and password.
-     *
-     * @param code     The user's code.
-     * @param password The user's password.
-     * @return The authenticated user entity, or a 401 Unauthorized response if authentication fails.
-     */
-    @PostMapping("/authenticate")
-    public ResponseEntity<UserEntity> authenticate(@RequestParam("code") String code, @RequestParam("password") String password) {
+    @PostMapping
+    public ResponseEntity<String> login(@RequestParam String code, @RequestParam String password) {
         UserEntity user = userService.authenticate(code, password);
         if (user == null) {
-            return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
-        } else {
-            return new ResponseEntity<>(user, HttpStatus.OK);
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid credentials");
         }
+        return ResponseEntity.ok("Welcome " + user.getFirstName() + " " + user.getLastName());
     }
-
 }
