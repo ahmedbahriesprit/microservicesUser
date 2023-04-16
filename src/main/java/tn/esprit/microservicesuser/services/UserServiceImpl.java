@@ -95,9 +95,6 @@ public class UserServiceImpl implements IUserService {
     @Override
     public UserEntity authenticate(String code, String password) {
         UserEntity user = userRepository.findByCodeAndPassword(code, UserEntity.hashPassword(password));
-        if (user == null) {
-            throw new RuntimeException("Invalid credentials");
-        }
         return user;
     }
 }
