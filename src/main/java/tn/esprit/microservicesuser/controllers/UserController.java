@@ -5,6 +5,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import tn.esprit.microservicesuser.entities.UserEntity;
+import tn.esprit.microservicesuser.services.IUserService;
 import tn.esprit.microservicesuser.services.UserServiceImpl;
 
 import java.util.List;
@@ -21,7 +22,7 @@ public class UserController {
      * The service implementation for user management.
      */
     @Autowired
-    private UserServiceImpl userService;
+    private IUserService userService;
 
     /**
      * Returns a list of all users.
@@ -77,12 +78,4 @@ public class UserController {
         userService.deleteUser(id);
     }
 
-    @PostMapping
-    public ResponseEntity<String> login(@RequestParam String code, @RequestParam String password) {
-        UserEntity user = userService.authenticate(code, password);
-        if (user == null) {
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid credentials");
-        }
-        return ResponseEntity.ok("Welcome " + user.getFirstName() + " " + user.getLastName());
-    }
 }

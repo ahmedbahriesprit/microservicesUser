@@ -91,10 +91,4 @@ public class UserServiceImpl implements IUserService {
         userRepository.deleteById(id);
     }
 
-
-    @Override
-    public UserEntity authenticate(String code, String password) {
-        UserEntity user = userRepository.findByCodeAndPassword(code, UserEntity.hashPassword(password));
-        return user;
-    }
 }
